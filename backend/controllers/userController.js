@@ -2,7 +2,7 @@ const ErrorHander = require("../utils/errorhander");
 const tryCatchError = require("../middleware/tryCatchErrors");
 const User = require("../models/userModel");
 const sendToken = require("../utils/jwtToken");
-const sendEmail = require("../utils/sendEmail.js");
+const sendEmail = require("../utils/sendEmail");
 
 // Register a User
 exports.registerUser = tryCatchError(async (req, res, next) => {
@@ -47,7 +47,7 @@ exports.loginUser = tryCatchError(async (req, res, next) => {
 });
 
 // Logout User
-exports.logout = tryCatchErrors(async (req, res, next) => {
+exports.logout = tryCatchError(async (req, res, next) => {
   res.cookie("token", null, {
     expires: new Date(Date.now()),
     httpOnly: true,
@@ -60,7 +60,7 @@ exports.logout = tryCatchErrors(async (req, res, next) => {
 });
 
 // Forgot Password
-exports.forgotPassword = tryCatchErrors(async (req, res, next) => {
+exports.forgotPassword = tryCatchError(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return next(new ErrorHander("User not found", 404));
