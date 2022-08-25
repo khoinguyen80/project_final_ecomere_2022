@@ -12,7 +12,7 @@ const sendEmail = async (options) => {
   });
 
   const mailOptions = {
-    form: "duongtrankhoinguyen1207@gmail.com",
+    form: "nguyendtkgcd17311@fpt.edu.vn",
     to: options.email,
     subject: options.subject,
     text: options.message,
