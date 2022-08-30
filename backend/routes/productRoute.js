@@ -31,4 +31,9 @@ router
   .route("/review")
   .put(isAuthenticatedUser, ProductController.createProductReview);
 
+router
+  .route("/reviews")
+  .get(ProductController.getProductReviews)
+  .delete(isAuthenticatedUser, ProductController.deleteReview);
+
 module.exports = router;
