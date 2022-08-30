@@ -27,4 +27,8 @@ router
   )
   .get(ProductController.getProductDetails);
 
+router
+  .route("/review")
+  .put(isAuthenticatedUser, ProductController.createProductReview);
+
 module.exports = router;

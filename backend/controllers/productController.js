@@ -78,5 +78,46 @@ const ProductController = {
       message: "Product Delete Successfully",
     });
   }),
+
+  // Create New Review or Update the review
+
+  createProductReview: tryCatchError(async (req, res, next) => {
+    const { rating, comment, productId } = req.body;
+    console.log({ rating, comment, productId });
+    const review = {
+      user: req.user._id,
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+    };
+
+    const product = await Product.findById(productId);
+    const isReviewed = product.reviews.find(
+      (rev) => rev.user.toString() === req.user._id.toString()
+    );
+
+    if (isReviewed) {
+      product.reviews.forEach((rev) => {
+        if (rev.user.toString() === req.user._id.toString())
+          (rev.rating = rating), (rev.comment = comment);
+      });
+    } else {
+      product.reviews.push(review);
+      product.numOfReviews = product.reviews.length;
+    }
+
+    let avg = 0;
+    product.ratings = product.reviews.forEach((rev) => {
+      avg += rev.rating;
+    });
+    product.rating = avg / product.reviews.length;
+
+    await product.save({ validatorBeforeSave: false });
+
+    res.status(200).json({
+      success: true,
+    });
+  }),
 };
+
 module.exports = ProductController;
