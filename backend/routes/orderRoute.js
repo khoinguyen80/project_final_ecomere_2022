@@ -1,31 +1,40 @@
 const express = require("express");
-const {
-  newOrder,
-  getSingleOrder,
-  myOrders,
-  getAllOrders,
-  updateOrder,
-  deleteOrder,
-} = require("../controllers/orderController");
+const orderController = require("../controllers/orderController");
 const router = express.Router();
 
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
-router.route("/order/new").post(isAuthenticatedUser, newOrder);
+router.route("/order/new").post(isAuthenticatedUser, orderController.newOrder);
 
 router
   .route("/order/:id")
-  .get(isAuthenticatedUser, authorizeRoles("admin"), getSingleOrder);
+  .get(
+    isAuthenticatedUser,
+    authorizeRoles("admin"),
+    orderController.getSingleOrder
+  );
 
-router.route("/orders/me").get(isAuthenticatedUser, myOrders);
+router.route("/orders/me").get(isAuthenticatedUser, orderController.myOrders);
 
 router
   .route("/admin/orders")
-  .get(isAuthenticatedUser, authorizeRoles("admin"), getAllOrders);
+  .get(
+    isAuthenticatedUser,
+    authorizeRoles("admin"),
+    orderController.getAllOrders
+  );
 
 router
   .route("/admin/order/:id")
-  .put(isAuthenticatedUser, authorizeRoles("admin"), updateOrder)
-  .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteOrder);
+  .put(
+    isAuthenticatedUser,
+    authorizeRoles("admin"),
+    orderController.updateOrder
+  )
+  .delete(
+    isAuthenticatedUser,
+    authorizeRoles("admin"),
+    orderController.deleteOrder
+  );
 
 module.exports = router;
