@@ -8,21 +8,19 @@
 }
 
 .leftFooter {
-  width: 20%;
+  width: 25%;
   display: flex;
-
   flex-direction: column;
   align-items: center;
 }
 
 .leftFooter > h4 {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: "Times New Roman";
 }
 
 .leftFooter > p {
   text-align: center;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: "Times New Roman";
 }
 
 .leftFooter > div {
@@ -30,6 +28,9 @@
   gap: 10px;
 }
 
+.rightFooter {
+  width: 20%;
+}
 .rightFooter > a {
   display: flex;
   gap: 10px;
@@ -43,11 +44,10 @@
 
 .midFooter > h1 {
   font-size: 4vmax;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: "Times New Roman";
   color: rgb(37, 5, 11);
 }
 
 .midFooter > p {
-  max-width: 60%;
   margin: 1vmax auto;
 }

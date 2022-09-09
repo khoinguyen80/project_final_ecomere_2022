@@ -24,7 +24,7 @@ const Header = () => {
     nav1alignItems: "start",
     nav2alignItems: "start",
     nav3alignItems: "start",
-    link1Margin: "70px 20px 0 80px",
+    link1Margin: "70px 15px 0 60px",
     profileIconUrl: "/login",
     profileIconColor: "rgba(35, 35, 35,0.8)",
     searchIconColor: "rgba(35, 35, 35,0.8)",
