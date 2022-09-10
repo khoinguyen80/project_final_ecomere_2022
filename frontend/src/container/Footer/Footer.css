@@ -1,0 +1,12 @@
+.footer {
+  margin-top: 10vmax;
+  padding: 2vmax;
+  background-color: rgb(186, 118, 171);
+  color: rgb(30, 4, 4);
+  display: flex;
+  justify-content: center;
+}
+
+.midFooter {
+  text-align: center;
+}

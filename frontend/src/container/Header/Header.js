@@ -1,13 +1,13 @@
 import React from "react";
 import { ReactNavbar } from "overlay-navbar";
-import logo from "../../../accset/header/logoBabyShop.jpg";
+import logo from "../../accset/header/logoBabyShop.jpg";
 
 const Header = () => {
   const options = {
-    burgerColorHover: "#eb4034",
+    burgerColorHover: "#FF69B4",
     logo,
-    logoWidth: "20vmax",
-    navColor1: "white",
+    logoWidth: "300px",
+    navColor1: "#FFC0CB",
     logoHoverSize: "10px",
     logoHoverColor: "#eb4034",
     link1Text: "Home",
@@ -24,7 +24,7 @@ const Header = () => {
     nav1alignItems: "start",
     nav2alignItems: "start",
     nav3alignItems: "start",
-    link1Margin: "70px 15px 0 60px",
+    link1Margin: "70px 25px 0 60px",
     profileIconUrl: "/login",
     profileIconColor: "rgba(35, 35, 35,0.8)",
     searchIconColor: "rgba(35, 35, 35,0.8)",

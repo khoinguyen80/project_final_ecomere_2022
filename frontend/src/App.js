@@ -1,10 +1,10 @@
 import "./App.css";
-import Header from "./component/layout/Header/Header";
+import Header from "./container/Header/Header";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Webfont from "webfontloader";
 import React from "react";
-import Footer from "./component/layout/Footer/Footer.js";
-import Home from "./component/Home/Home.js";
+import Footer from "./container/Footer/Footer";
+import Home from "./container/Home/Home";
 
 function App() {
   React.useEffect(() => {
