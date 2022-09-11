@@ -18,7 +18,8 @@ function App() {
   return (
     <Router>
       <Header />
-      <Route extact path="/" component={Home} />
+      <Route exact path="/" component={Home} />
+      {/* <Route path="/tuyen" component={Footer} /> */}
       <Footer />
     </Router>
   );
