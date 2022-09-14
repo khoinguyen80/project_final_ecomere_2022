@@ -1,16 +1,19 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import "./Home.css";
 import Product from "./Product";
+import { getProduct } from "../../container/action/productAction";
+import { useSelector, useDispatch } from "react-redux";
 
-const product = {
-  name: "Blue Tshirt",
-  images: [
-    { url: "https://ressmedia.com/wp-content/uploads/2021/07/ANH-1-2.jpg" },
-  ],
-  price: "1200",
-  _id: "KhoiNguyen",
-};
 const Home = () => {
+  const dispatch = useDispatch();
+  const { loading, error, products, productsCount } = useSelector(
+    (state) => state.products
+  );
+  console.log(products);
+  useEffect(() => {
+    dispatch(getProduct());
+  }, []);
+
   return (
     <Fragment>
       <div className="banner">
@@ -24,18 +27,7 @@ const Home = () => {
       <h2 className="homeHeading">Featured Products</h2>
 
       <div className="container" id="container">
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
-        <Product product={product} />
+        {products && products.map((product) => <Product product={product} />)}
       </div>
     </Fragment>
   );
