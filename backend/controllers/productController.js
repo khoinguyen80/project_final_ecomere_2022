@@ -15,19 +15,24 @@ const ProductController = {
   }),
 
   // Get All Product
-  getAllProducts: tryCatchError(async (req, res) => {
-    const resultPerPage = 10;
-    const productCount = await Product.countDocuments();
+  getAllProducts: tryCatchError(async (req, res, next) => {
+    const resultPerPage = 8;
+    const productsCount = await Product.countDocuments();
     const apiFeature = new ApiFeatures(Product.find(), req.query)
       .search()
-      .filter()
-      .pagination(resultPerPage);
-    const products = await apiFeature.query;
+      .filter();
+
+    let products = await apiFeature.query;
+    let filteredProductsCount = products.length;
+    apiFeature.pagination(resultPerPage);
+    products = await apiFeature.query;
 
     res.status(200).json({
       success: true,
       products,
-      productCount,
+      productsCount,
+      resultPerPage,
+      filteredProductsCount,
     });
   }),
 
