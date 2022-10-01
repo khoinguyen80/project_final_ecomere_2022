@@ -2,19 +2,27 @@ import React, { Fragment, useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
 import "./ProductDetails.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductDetails } from "container/action/productAction";
+import { clearErrors, getProductDetails } from "container/action/productAction";
 import Loader from "container/Loader/Loader";
+import ReviewCard from "container/Product/ReviewCard";
+import { useAlert } from "react-alert";
 
 const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
+  const alert = useAlert();
 
   const { product, loading, error } = useSelector(
     (state) => state?.productDetails
   );
 
   useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
     dispatch(getProductDetails(match?.params?.id));
-  }, [dispatch, match.params.id]);
+  }, [dispatch, match.params.id, error, alert]);
+
   if (loading) return <Loader />;
   return (
     <Fragment>
@@ -32,39 +40,48 @@ const ProductDetails = ({ match }) => {
               ))}
             </Carousel>
           </div>
-          <div className="detailsBlock-1">
-            <h2>{product?.name}</h2>
-            <p>Product # {product?._id}</p>
-          </div>
-          <div className="detailsBlock-2">
-            <span> ({product?.numOfReviews} Reviews)</span>
-          </div>
-          <div className="detailsBlock-3">
-            <h1>{`$${product?.price}`}</h1>
-            <div className="detailsBlock-3-1">
-              <div className="detailsBlock-3-1-1">
-                <button>-</button>
-                <input value="1" type="number" />
-                <button>+</button>
-              </div>
-              {""}
-              <button>Add to Cart</button>
+          <div>
+            <div className="detailsBlock-1">
+              <p>Product # {product?._id}</p>
+              <h2>{product?.name}</h2>
             </div>
-            <p>
-              Status:{""}
-              <b className={product?.Stock < 1 ? "redColor" : "greenColor"}>
-                {product?.Stock < 1 ? "OutOfStock" : "InStock"}
-              </b>
-            </p>
-          </div>
+            <div className="detailsBlock-3">
+              <h1>{`$${product?.price}`}</h1>
+              <div className="detailsBlock-3-1">
+                <div className="detailsBlock-3-1-1">
+                  <button>-</button>
+                  <input value="1" type="number" />
+                  <button>+</button>
+                </div>
+                {""}
+                <button>Add to Cart</button>
+              </div>
+              <p>
+                Status: {""}
+                <b className={product?.Stock < 1 ? "redColor" : "greenColor"}>
+                  {product?.Stock < 1 ? "OutOfStock" : "InStock"}
+                </b>
+              </p>
+            </div>
+            <div className="detailsBlock-4">
+              Description : <p>{product?.description}</p>
+            </div>
 
-          <div className="detailsBlock-4">
-            Description : <p>{product?.description}</p>
+            <button className="submitReview">Submit Review</button>
           </div>
-
-          <button className="submitReview">Submit Review</button>
         </div>
       )}
+      <div>
+        <h3 className="reviewsHeading">REVIEWS</h3>
+        {product?.reviews && product?.reviews[0] ? (
+          <div className="reviews">
+            {product?.reviews &&
+              product?.reviews.map((review) => <ReviewCard review={review} />)}
+          </div>
+        ) : (
+          <p className="noReviews">No Reviews Yet</p>
+        )}
+      </div>
     </Fragment>
   );
 };
