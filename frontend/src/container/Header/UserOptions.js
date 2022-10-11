@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { logout } from "container/action/userAction";
+import avartar from "../../accset/product/avatar.jpg";
 
 const UserOptions = ({ user }) => {
   const [open, setOpen] = useState(false);
@@ -57,11 +58,11 @@ const UserOptions = ({ user }) => {
         style={{ zIndex: "11" }}
         open={open}
         direction="down"
-        className="speedDialIcon"
+        className="speedDial"
         icon={
           <img
             className="speedDialIcon"
-            src={user.avatar.url ? user.avatar.url : "/Profile.png"}
+            src={user.avatar.url ? user.avatar.url : avartar}
             alt="Profile"
           />
         }
@@ -72,6 +73,7 @@ const UserOptions = ({ user }) => {
             icon={item.icon}
             tooltipTitle={item.name}
             onClick={item.func}
+            tooltipOpen={window.innerWidth <= 600 ? true : false}
           />
         ))}
       </SpeedDial>

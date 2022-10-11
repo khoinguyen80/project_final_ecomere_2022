@@ -8,7 +8,7 @@ import FaceIcon from "@material-ui/icons/Face";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, register } from "container/action/userAction";
 import { useAlert } from "react-alert";
-const LoginSignUp = ({ history }) => {
+const LoginSignUp = ({ history, location }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
@@ -31,7 +31,7 @@ const LoginSignUp = ({ history }) => {
 
   const { name, email, password } = user;
 
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState("/Profile.png");
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
   const loginSubmit = (e) => {
@@ -50,7 +50,6 @@ const LoginSignUp = ({ history }) => {
     myForm.set("avatar", avatar);
     dispatch(register(myForm));
   };
-
   const registerDataChange = (e) => {
     if (e.target.name === "avatar") {
       const reader = new FileReader();
@@ -62,11 +61,13 @@ const LoginSignUp = ({ history }) => {
         }
       };
 
-      reader.readerAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(e.target.files[0]);
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
     }
   };
+
+  const redirect = location.search ? location.search.split("=")[1] : "/account";
 
   useEffect(() => {
     if (error) {
@@ -75,19 +76,17 @@ const LoginSignUp = ({ history }) => {
     }
 
     if (isAuthenticated) {
-      history.push("/account");
+      history.push(redirect);
     }
-  }, [dispatch, error, alert, history, isAuthenticated]);
-
+  }, [dispatch, error, alert, history, isAuthenticated, redirect]);
   const switchTabs = (e, tab) => {
     if (tab === "login") {
       switcherTab.current.classList.add("shiftToNeutral");
       switcherTab.current.classList.remove("shiftToRight");
 
-      registerTab.current.classList.remove("shiftToNeutralFrom");
+      registerTab.current.classList.remove("shiftToNeutralForm");
       loginTab.current.classList.remove("shiftToLeft");
     }
-
     if (tab === "register") {
       switcherTab.current.classList.add("shiftToRight");
       switcherTab.current.classList.remove("shiftToNeutral");
@@ -98,7 +97,7 @@ const LoginSignUp = ({ history }) => {
   };
   return (
     <Fragment>
-      {loading ? (
+      {!loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -106,12 +105,12 @@ const LoginSignUp = ({ history }) => {
             <div className="LoginSignUpBox">
               <div>
                 <div className="login_signUp_toggle">
-                  <p onClick={(e) => switchTabs(e, "login")}></p>
+                  <p onClick={(e) => switchTabs(e, "login")}>LOGIN</p>
                   <p onClick={(e) => switchTabs(e, "register")}>REGISTER</p>
                 </div>
                 <button ref={switcherTab}></button>
               </div>
-              <form className="LoginFrom" ref={loginTab} onSubmit={loginSubmit}>
+              <form className="loginForm" ref={loginTab} onSubmit={loginSubmit}>
                 <div className="loginEmail">
                   <MailOutlineIcon />
                   <input
@@ -133,9 +132,8 @@ const LoginSignUp = ({ history }) => {
                   />
                 </div>
                 <Link to="/password/forgot">Forget Password ?</Link>
-                <input type="submit" value="login" className="loginBtn" />
+                <input type="submit" value="Login" className="loginBtn" />
               </form>
-
               <form
                 className="signUpForm"
                 ref={registerTab}
@@ -164,14 +162,13 @@ const LoginSignUp = ({ history }) => {
                     onChange={registerDataChange}
                   />
                 </div>
-
                 <div className="signUpPassword">
                   <LockOpenIcon />
                   <input
                     type="password"
-                    placeholder="password"
+                    placeholder="Password"
                     required
-                    name="{password}"
+                    name="password"
                     value={password}
                     onChange={registerDataChange}
                   />

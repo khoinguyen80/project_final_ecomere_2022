@@ -13,6 +13,13 @@ import store from "./store";
 import { loadUser } from "container/action/userAction";
 import UserOptions from "container/Header/UserOptions";
 import { useSelector } from "react-redux";
+import Profile from "container/User/Profile";
+import ProtectedRoute from "container/Route/ProtectedRoute";
+import UpdateProfile from "container/User/UpdateProfile";
+import UpdatePassword from "container/User/UpdatePassword";
+import ForgotPassword from "container/User/ForgotPassword";
+import ResetPassword from "container/User/ResetPassword";
+import Cart from "container/Cart/Cart";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -36,7 +43,18 @@ function App() {
       <Route exact path="/products" component={Products} />
       <Route path="/products/:keyword" component={Products} />
       <Route exact path="/search" component={Search} />
+      <ProtectedRoute exact path="/account" component={Profile} />
+      <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
+      <ProtectedRoute
+        exact
+        path="/password/update"
+        component={UpdatePassword}
+      />
+
+      <Route exact path="/password/forgot" component={ForgotPassword} />
+      <Route exact path="/password/reset/:token" component={ResetPassword} />
       <Route exact path="/login" component={LoginSignUp} />
+      <Route exact path="/cart" component={Cart} />
       <Footer />
     </Router>
   );
