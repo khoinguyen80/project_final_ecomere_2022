@@ -88,7 +88,6 @@ const ProductController = {
 
   createProductReview: tryCatchError(async (req, res, next) => {
     const { rating, comment, productId } = req.body;
-    console.log({ rating, comment, productId });
     const review = {
       user: req.user._id,
       name: req.user.name,

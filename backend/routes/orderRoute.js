@@ -8,11 +8,7 @@ router.route("/order/new").post(isAuthenticatedUser, orderController.newOrder);
 
 router
   .route("/order/:id")
-  .get(
-    isAuthenticatedUser,
-    authorizeRoles("admin"),
-    orderController.getSingleOrder
-  );
+  .get(isAuthenticatedUser, orderController.getSingleOrder);
 
 router.route("/orders/me").get(isAuthenticatedUser, orderController.myOrders);
 

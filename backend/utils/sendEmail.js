@@ -6,13 +6,13 @@ const sendEmail = async (options) => {
     port: 587,
     secure: false,
     auth: {
-      user: "nguyendtkgcd17311@fpt.edu.vn",
-      pass: "01668596926",
+      user: "khoahmtgcd18616@fpt.edu.vn",
+      pass: "hmtk3112000",
     },
   });
 
   const mailOptions = {
-    form: "nguyendtkgcd17311@fpt.edu.vn",
+    form: "khoahmtgcd18616@fpt.edu.vn",
     to: options.email,
     subject: options.subject,
     text: options.message,
