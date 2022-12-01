@@ -30,12 +30,14 @@ import { loadStripe } from "@stripe/stripe-js";
 import OrderSuccess from "container/Cart/OrderSuccess";
 import MyOrders from "container/Order/MyOrders";
 import OrderDetails from "container/Order/OrderDetails";
+import Dashboard from "container/admin/Dashboard";
+import ProductList from "container/admin/ProductList";
+import NewProduct from "container/admin/NewProduct";
+import UpdateProduct from "container/admin/UpdateProduct";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
-
   const [stripeApiKey, setStripeApiKey] = useState("");
-
   async function getStripeApiKey() {
     const { data } = await axios.get("/api/v1/stripeapikey");
     setStripeApiKey(data.stripeApiKey);
@@ -92,6 +94,31 @@ function App() {
             component={ConfirmOrder}
           />
           <ProtectedRoute exact path="/order/:id" component={OrderDetails} />
+
+          <ProtectedRoute
+            isAdmin={true}
+            exact
+            path="/admin/dashboard"
+            component={Dashboard}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/products"
+            isAdmin={true}
+            component={ProductList}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/product"
+            isAdmin={true}
+            component={NewProduct}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/product/:id"
+            isAdmin={true}
+            component={UpdateProduct}
+          />
         </Switch>
 
         <Footer />

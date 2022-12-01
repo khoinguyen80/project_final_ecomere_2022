@@ -4,9 +4,15 @@ const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
 
 router.route("/products").get(ProductController.getAllProducts);
-
 router
-  .route("/product/new")
+  .route("/admin/products")
+  .get(
+    isAuthenticatedUser,
+    authorizeRoles("admin"),
+    ProductController.getAdminProducts
+  );
+router
+  .route("/admin/product/new")
   .post(
     isAuthenticatedUser,
     authorizeRoles("admin"),
@@ -14,7 +20,7 @@ router
   );
 
 router
-  .route("/product/:id")
+  .route("/admin/product/:id")
   .put(
     isAuthenticatedUser,
     authorizeRoles("admin"),
@@ -24,9 +30,9 @@ router
     isAuthenticatedUser,
     authorizeRoles("admin"),
     ProductController.deleteProduct
-  )
-  .get(ProductController.getProductDetails);
+  );
 
+router.route("/product/:id").get(ProductController.getProductDetails);
 router
   .route("/review")
   .put(isAuthenticatedUser, ProductController.createProductReview);

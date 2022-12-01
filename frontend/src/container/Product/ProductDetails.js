@@ -32,22 +32,24 @@ const ProductDetails = ({ match }) => {
   const { success, error: reviewError } = useSelector(
     (state) => state.newReview
   );
-
   const [quantity, setQuantity] = useState(1);
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  const increaseQuantity = () => {
-    // if (product?.Stock <= quantity) return;
+  const options = {
+    size: "large",
+    value: product?.ratings,
+    readOnly: true,
+    precision: 0.5,
+  };
 
+  const increaseQuantity = () => {
     const qty = quantity + 1;
     setQuantity(qty);
   };
 
   const decreaseQuantity = () => {
-    // if (1 >= quantity) return;
-
     const qty = quantity - 1;
     setQuantity(qty);
   };
@@ -63,13 +65,10 @@ const ProductDetails = ({ match }) => {
 
   const reviewSubmitHandler = () => {
     const myForm = new FormData();
-
     myForm.set("rating", rating);
     myForm.set("comment", comment);
     myForm.set("productId", match.params.id);
-
     dispatch(newReview(myForm));
-
     setOpen(false);
   };
 
@@ -112,6 +111,12 @@ const ProductDetails = ({ match }) => {
             <div className="detailsBlock-1">
               <p>Product # {product?._id}</p>
               <h2>{product?.name}</h2>
+            </div>
+            <div className="detailsBlock-2">
+              <Rating {...options} />
+              <span className="detailsBlock-2-span">
+                ({product.numOfReviews} Reviews)
+              </span>
             </div>
             <div className="detailsBlock-3">
               <h1>{`$${product?.price}`}</h1>
