@@ -3,16 +3,17 @@ const nodeMailer = require("nodemailer");
 const sendEmail = async (options) => {
   const transporter = nodeMailer.createTransport({
     host: "smtp.gmail.com",
-    port: 587,
+    port: 578,
     secure: false,
+    service: "gmail",
     auth: {
-      user: "khoahmtgcd18616@fpt.edu.vn",
-      pass: "hmtk3112000",
+      user: "minhbngcd19815@fpt.edu.vn",
+      pass: "nhatminh5331",
     },
   });
 
   const mailOptions = {
-    form: "khoahmtgcd18616@fpt.edu.vn",
+    form: "Nguyen FPT",
     to: options.email,
     subject: options.subject,
     text: options.message,
