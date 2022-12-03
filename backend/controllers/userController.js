@@ -234,7 +234,7 @@ const userController = {
       role: req.body.role,
     };
 
-    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+    await User.findByIdAndUpdate(req.params.id, newUserData, {
       new: true,
       runValidators: true,
       userFindAndModify: false,
@@ -256,6 +256,9 @@ const userController = {
         new ErrorHander(`User does not exist to with Id: ${req.params.id}`)
       );
     }
+    const imageId = user.avatar.public_id;
+
+    await cloudinary.v2.uploader.destroy(imageId);
 
     await user.remove();
 
