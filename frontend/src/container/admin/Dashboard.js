@@ -6,11 +6,16 @@ import { Link } from "react-router-dom";
 import { Doughnut, Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminProduct } from "container/action/productAction";
+import { getAllOrders } from "container/action/orderAction";
+import { getAllUsers } from "container/action/userAction";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
-  let outOfStock = 0;
 
+  const { orders } = useSelector((state) => state.allOrders);
+
+  const { users } = useSelector((state) => state.allUsers);
+  let outOfStock = 0;
   products &&
     products.forEach((item) => {
       if (item.Stock === 0) {
@@ -20,7 +25,15 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getAdminProduct());
+    dispatch(getAllOrders());
+    dispatch(getAllUsers());
   }, [dispatch]);
+
+  let totalAmount = 0;
+  orders &&
+    orders.forEach((item) => {
+      totalAmount += item.totalPrice;
+    });
 
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
@@ -29,7 +42,7 @@ const Dashboard = () => {
         label: "TOTAL AMOUNT",
         backgroundColor: ["tomato"],
         hoverBackgroundColor: ["rgb(197, 72, 49)"],
-        data: [0, 4000],
+        data: [0, totalAmount],
       },
     ],
   };
@@ -62,9 +75,11 @@ const Dashboard = () => {
             </Link>
             <Link to="/admin/orders">
               <p>Orders</p>
+              <p>{orders && orders.length}</p>
             </Link>
             <Link to="/admin/users">
               <p>Users</p>
+              <p>{users && users.length}</p>
             </Link>
           </div>
         </div>
