@@ -25,17 +25,7 @@ const NewProduct = ({ history }) => {
   const [Stock, setStock] = useState(0);
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
-
-  const categories = [
-    "Laptop",
-    "Footwear",
-    "Bottom",
-    "Tops",
-    "Attire",
-    "Camera",
-    "SmartPhones",
-  ];
-
+  const categories = ["Ao Baby", "Quan Baby", "Do lot BaBy"];
   useEffect(() => {
     if (error) {
       alert.error(error);

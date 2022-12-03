@@ -38,6 +38,10 @@ import OrderList from "container/admin/OrderList";
 import ProcessOrder from "container/admin/ProcessOrder";
 import UsersList from "container/admin/UsersList";
 import UpdateUser from "container/admin/UpdateUser";
+import ProductReviews from "container/admin/ProductReviews";
+import Contact from "container/contact/Contact";
+import About from "container/about/About";
+import NotFound from "container/NotFound/NotFound";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -75,6 +79,8 @@ function App() {
         <Route exact path="/products" component={Products} />
         <Route path="/products/:keyword" component={Products} />
         <Route exact path="/search" component={Search} />
+        <Route exact path="/contact" component={Contact} />
+        <Route exact path="/about" component={About} />
         <ProtectedRoute exact path="/account" component={Profile} />
         <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
         <ProtectedRoute
@@ -148,6 +154,18 @@ function App() {
             path="/admin/user/:id"
             isAdmin={true}
             component={UpdateUser}
+          />
+
+          <ProtectedRoute
+            exact
+            path="/admin/reviews"
+            isAdmin={true}
+            component={ProductReviews}
+          />
+          <Route
+            component={
+              window.location.pathname === "/process/payment" ? null : NotFound
+            }
           />
         </Switch>
 

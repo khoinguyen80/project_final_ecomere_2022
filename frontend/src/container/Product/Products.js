@@ -9,15 +9,7 @@ import Slider from "@material-ui/core/Slider";
 import { useAlert } from "react-alert";
 import Typography from "@material-ui/core/Typography";
 
-const categories = [
-  "Ao ba lo",
-  "Ao lot",
-  "shirt",
-  "Tops",
-  "Attire",
-  "Camera",
-  "SmartPhones",
-];
+const categories = ["Ao Baby", "Quan Baby", "Do lot BaBy"];
 
 const Products = ({ match }) => {
   const dispactch = useDispatch();
@@ -27,7 +19,6 @@ const Products = ({ match }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([0, 25000]);
   const [category, setCategory] = useState("");
-
   const [ratings, setRatings] = useState(0);
 
   const {
